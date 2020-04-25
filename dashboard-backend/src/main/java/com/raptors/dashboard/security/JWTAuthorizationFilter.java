@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.util.List;
 
 import static ch.qos.logback.core.CoreConstants.EMPTY_STRING;
+import static com.raptors.dashboard.crytpo.HexUtils.hexToBytes;
 import static com.raptors.dashboard.security.SecurityConstants.ENCRYPTED_KEY;
 import static com.raptors.dashboard.security.SecurityConstants.ROLE;
 import static com.raptors.dashboard.security.SecurityConstants.TOKEN_PREFIX;
-import static java.nio.charset.StandardCharsets.US_ASCII;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -54,7 +54,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(AUTHORIZATION);
         if (token != null) {
             DecodedJWT decodedJwt = JWT.require(
-                    Algorithm.HMAC512(securityPropertyHolder.getTokenSecret().getBytes(US_ASCII)))
+                    Algorithm.HMAC512(hexToBytes(securityPropertyHolder.getTokenSecret())))
                     .build()
                     .verify(token.replace(TOKEN_PREFIX, EMPTY_STRING));
 

@@ -1,6 +1,6 @@
 package com.raptors.dashboard.crytpo;
 
-import org.apache.commons.codec.DecoderException;
+import lombok.SneakyThrows;
 import org.apache.commons.codec.binary.Hex;
 
 public class HexUtils {
@@ -12,7 +12,8 @@ public class HexUtils {
         return new String(Hex.encodeHex(bytes));
     }
 
-    public static byte[] hexToBytes(String hex) throws DecoderException {
+    @SneakyThrows
+    public static byte[] hexToBytes(String hex) {
         return Hex.decodeHex(hex);
     }
 }
