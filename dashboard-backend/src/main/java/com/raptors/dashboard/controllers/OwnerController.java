@@ -23,7 +23,7 @@ public class OwnerController {
 
     static final String OWNER_PATH = "/owner";
     private static final String INSTANCE = "/instance";
-    private static final String INSTANCE_ID = "/instance/{id}";
+    private static final String INSTANCE_UUID = "/instance/{uuid}";
 
     private final UserService userService;
 
@@ -38,9 +38,9 @@ public class OwnerController {
         return userService.addInstance((String) token.getPrincipal(), (String) token.getCredentials(), instanceRequest);
     }
 
-    @DeleteMapping(INSTANCE_ID)
-    public ResponseEntity addInstance(@PathVariable("id") String id,
+    @DeleteMapping(INSTANCE_UUID)
+    public ResponseEntity addInstance(@PathVariable("uuid") String uuid,
                                       Principal principal) {
-        return userService.removeInstance(principal.getName(), id);
+        return userService.removeInstance(principal.getName(), uuid);
     }
 }

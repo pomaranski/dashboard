@@ -15,6 +15,8 @@ import java.net.URI;
 @Builder
 public class InstanceResponse {
 
+    private String uuid;
+
     private String name;
 
     private URI uri;

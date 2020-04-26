@@ -2,23 +2,28 @@ package com.raptors.dashboard.controllers;
 
 import com.raptors.dashboard.services.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
+import static org.springframework.http.MediaType.ALL_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(path = AuthorizedUserController.USER_PATH,
-        consumes = APPLICATION_JSON_VALUE,
+        consumes = ALL_VALUE,
         produces = APPLICATION_JSON_VALUE)
 public class AuthorizedUserController {
 
     static final String USER_PATH = "/user";
 
     private static final String INSTANCE = "/instance";
+    private static final String INSTANCE_UUID_LOGIN = "/instance/{uuid}/login";
 
     private final UserService userService;
 
@@ -29,5 +34,12 @@ public class AuthorizedUserController {
     @GetMapping(INSTANCE)
     public ResponseEntity getInstances(Principal principal) {
         return userService.getInstances(principal.getName());
+    }
+
+    @PostMapping(INSTANCE_UUID_LOGIN)
+    public ResponseEntity loginToInstance(@PathVariable("uuid") String uuid,
+                                          Principal principal) {
+        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+        return userService.loginToInstance((String) token.getPrincipal(), (String) token.getCredentials(), uuid);
     }
 }
