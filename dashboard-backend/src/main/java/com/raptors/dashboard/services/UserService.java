@@ -3,13 +3,16 @@ package com.raptors.dashboard.services;
 import com.raptors.dashboard.entities.Instance;
 import com.raptors.dashboard.entities.User;
 import com.raptors.dashboard.model.InstanceRequest;
+import com.raptors.dashboard.model.InstanceResponse;
 import com.raptors.dashboard.repositories.UserRepository;
 import com.raptors.dashboard.security.SecurityPropertyHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.raptors.dashboard.crytpo.CryptoModule.decryptAes;
 import static com.raptors.dashboard.crytpo.CryptoModule.encryptAes;
@@ -35,18 +38,28 @@ public class UserService {
     }
 
     public ResponseEntity addInstance(String login, String encryptedKey, InstanceRequest instanceRequest) {
+        try {
+            instanceRequest.validate();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
         return userRepository.findByLogin(login)
                 .map(user -> {
-                    user.addInstance(Instance.builder()
-                            .uuid(UUID.randomUUID())
-                            .name(instanceRequest.getName())
-                            .login(instanceRequest.getLogin())
-                            .uri(instanceRequest.getUri())
-                            .encryptedPassword(encryptPassword(encryptedKey, instanceRequest))
-                            .build());
+                    user.addInstance(mapInstanceRequestToInstance(encryptedKey, instanceRequest));
                     userRepository.save(user);
                     return ResponseEntity.ok().build();
                 }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    private Instance mapInstanceRequestToInstance(String encryptedKey, InstanceRequest instanceRequest) {
+        return Instance.builder()
+                .uuid(UUID.randomUUID().toString())
+                .name(instanceRequest.getName())
+                .login(instanceRequest.getLogin())
+                .uri(instanceRequest.getUri())
+                .encryptedPassword(encryptPassword(encryptedKey, instanceRequest))
+                .build();
     }
 
     private String encryptPassword(String encryptedKey, InstanceRequest instanceRequest) {
@@ -54,11 +67,31 @@ public class UserService {
         return bytesToHex(encryptAes(plainKey, instanceRequest.getPassword().getBytes(US_ASCII)));
     }
 
-    public void removeInstance(String login, UUID uuid) {
-        userRepository.findByLogin(login)
-                .ifPresent(user -> {
+    public ResponseEntity removeInstance(String login, String uuid) {
+        return userRepository.findByLogin(login)
+                .map(user -> {
                     user.removeInstance(uuid);
                     userRepository.save(user);
-                });
+                    return ResponseEntity.ok().build();
+                }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    public ResponseEntity getInstances(String login) {
+        return userRepository.findByLogin(login)
+                .map(user -> ResponseEntity.ok(mapUserInstancesToInstancesResponse(user)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    private List<InstanceResponse> mapUserInstancesToInstancesResponse(User user) {
+        return user.getInstances().stream()
+                .map(this::mapInstanceToInstanceResponse)
+                .collect(Collectors.toList());
+    }
+
+    private InstanceResponse mapInstanceToInstanceResponse(Instance instance) {
+        return InstanceResponse.builder()
+                .name(instance.getName())
+                .uri(instance.getUri())
+                .build();
     }
 }

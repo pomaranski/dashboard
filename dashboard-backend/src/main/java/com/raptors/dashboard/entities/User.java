@@ -38,7 +38,7 @@ public class User {
         instances.add(instance);
     }
 
-    public void removeInstance(UUID uuid) {
+    public void removeInstance(String uuid) {
         if (instances != null) {
             instances = instances.stream()
                     .filter(instance -> !instance.getUuid().equals(uuid))

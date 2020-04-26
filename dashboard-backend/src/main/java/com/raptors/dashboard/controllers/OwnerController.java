@@ -4,6 +4,7 @@ import com.raptors.dashboard.model.InstanceRequest;
 import com.raptors.dashboard.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +22,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class OwnerController {
 
     static final String OWNER_PATH = "/owner";
-    private static final String addInstance = "/addInstance";
-    private static final String removeInstance = "/removeInstance/{id}";
+    private static final String INSTANCE = "/instance";
+    private static final String INSTANCE_ID = "/instance/{id}";
 
     private final UserService userService;
 
@@ -30,16 +31,16 @@ public class OwnerController {
         this.userService = userService;
     }
 
-    @PostMapping(addInstance)
+    @PostMapping(INSTANCE)
     public ResponseEntity addInstance(@RequestBody InstanceRequest instanceRequest,
                                       Principal principal) {
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
         return userService.addInstance((String) token.getPrincipal(), (String) token.getCredentials(), instanceRequest);
     }
 
-    @PostMapping(removeInstance)
+    @DeleteMapping(INSTANCE_ID)
     public ResponseEntity addInstance(@PathVariable("id") String id,
                                       Principal principal) {
-        return null;
+        return userService.removeInstance(principal.getName(), id);
     }
 }

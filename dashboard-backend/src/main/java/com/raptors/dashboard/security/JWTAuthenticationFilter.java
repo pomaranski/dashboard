@@ -2,6 +2,7 @@ package com.raptors.dashboard.security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.raptors.dashboard.model.AuthUser;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;

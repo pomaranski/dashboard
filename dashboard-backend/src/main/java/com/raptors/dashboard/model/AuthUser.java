@@ -5,30 +5,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.net.URI;
-
+import static org.apache.commons.lang3.Validate.matchesPattern;
 import static org.apache.commons.lang3.Validate.notBlank;
-import static org.apache.commons.lang3.Validate.notNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-public class InstanceRequest implements Validated {
-
-    private String name;
-
-    private URI uri;
+@Setter
+public class AuthUser implements Validated {
 
     private String login;
 
     private String password;
 
+    private String key;
+
     @Override
     public void validate() {
-        notBlank(name, "Invalid name format");
-        notNull(uri, "Invalid uri format");
         notBlank(login, "Invalid login format");
-        notBlank(password, "Invalid password format");
+        notBlank(login, "Invalid login format");
+        matchesPattern(key, "\\p{XDigit}{32}", "Invalid key format");
     }
 }
