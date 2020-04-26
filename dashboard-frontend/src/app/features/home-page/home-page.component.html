@@ -1,0 +1,10 @@
+<div class="jumbotron bg-dark text-light">
+  <h1>Welcome</h1>
+  <p class="lead">Choose one of the instances assigned to you:</p>
+</div>
+<div class="row">
+  <div *ngFor="let instance of instances" class="col-md-6 col-lg-4 col-xl-3 text-light">
+      <h2>{{instance.name}}</h2>
+      <p><a target="_blank" (click)="selectInstance(instance)" class="btn btn-success">Select</a></p>
+  </div>
+</div>

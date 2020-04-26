@@ -1,0 +1,12 @@
+@import "../../../styles/global-variables";
+@import "../../../styles/color-palette";
+
+.content {
+  background-color: $primary-bg;
+  position: relative;
+  top: $header-height;
+}
+
+.container {
+  min-height: calc(100vh - #{$header-height} - #{$footer-height});
+}
