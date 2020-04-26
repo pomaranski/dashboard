@@ -3,18 +3,29 @@ package com.raptors.dashboard.security;
 import lombok.Getter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-class CustomAuthentication extends UsernamePasswordAuthenticationToken {
+@Getter
+public class CustomAuthentication extends UsernamePasswordAuthenticationToken {
 
-    @Getter
     private final String key;
 
-    @Getter
     private final Role role;
 
     CustomAuthentication(String principal,
                          String credentials,
+                         String key) {
+        this(principal, credentials, null, key);
+    }
+
+    CustomAuthentication(String principal,
                          Role role,
                          String key) {
+        this(principal, null, role, key);
+    }
+
+    private CustomAuthentication(String principal,
+                                 String credentials,
+                                 Role role,
+                                 String key) {
         super(principal, credentials);
         this.role = role;
         this.key = key;

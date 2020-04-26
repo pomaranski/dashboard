@@ -7,6 +7,7 @@ import com.raptors.dashboard.model.InstanceRequest;
 import com.raptors.dashboard.model.InstanceResponse;
 import com.raptors.dashboard.repositories.UserRepository;
 import com.raptors.dashboard.security.SecurityPropertyHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import static com.raptors.dashboard.crytpo.HexUtils.bytesToHex;
 import static com.raptors.dashboard.crytpo.HexUtils.hexToBytes;
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -46,11 +48,13 @@ public class UserService {
         try {
             instanceRequest.validate();
         } catch (RuntimeException e) {
+            log.info("Validate error {}", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
         return userRepository.findByLogin(login)
                 .map(user -> {
+                    log.info("Add instance {} to user {}", instanceRequest.getName(), login);
                     user.addInstance(mapInstanceRequestToInstance(encryptedKey, instanceRequest));
                     userRepository.save(user);
                     return ResponseEntity.ok().build();
@@ -60,6 +64,7 @@ public class UserService {
     public ResponseEntity removeInstance(String login, String uuid) {
         return userRepository.findByLogin(login)
                 .map(user -> {
+                    log.info("Remove instance {} from user {}", uuid, login);
                     user.removeInstance(uuid);
                     userRepository.save(user);
                     return ResponseEntity.ok().build();
@@ -75,11 +80,14 @@ public class UserService {
     public ResponseEntity loginToInstance(String login, String encryptedKey, String uuid) {
         return userRepository.findByLogin(login)
                 .map(user -> getInstance(uuid, user)
-                        .map(instance -> {
-                            String plainPassword = decryptPassword(encryptedKey, instance.getEncryptedPassword());
-                            return raptorsClient.authenticate(instance.getUri(), instance.getLogin(), plainPassword);
-                        }).orElseGet(() -> ResponseEntity.notFound().build()))
+                        .map(instance -> authenticate(encryptedKey, instance))
+                        .orElseGet(() -> ResponseEntity.notFound().build()))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    private ResponseEntity authenticate(String encryptedKey, Instance instance) {
+        String plainPassword = decryptPassword(encryptedKey, instance.getEncryptedPassword());
+        return raptorsClient.authenticate(instance.getUri(), instance.getLogin(), plainPassword);
     }
 
     private Optional<Instance> getInstance(String uuid, User user) {

@@ -1,8 +1,8 @@
 package com.raptors.dashboard.controllers;
 
+import com.raptors.dashboard.security.CustomToken;
 import com.raptors.dashboard.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +38,7 @@ public class AuthorizedUserController {
 
     @PostMapping(INSTANCE_UUID_LOGIN)
     public ResponseEntity loginToInstance(@PathVariable("uuid") String uuid,
-                                          Principal principal) {
-        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
-        return userService.loginToInstance((String) token.getPrincipal(), (String) token.getCredentials(), uuid);
+                                          CustomToken token) {
+        return userService.loginToInstance(token.getPrincipal(), token.getKey(), uuid);
     }
 }

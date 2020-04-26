@@ -35,7 +35,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid key");
         }
 
-        return new CustomAuthentication(user.getLogin(), null, user.getRole(), customAuthentication.getKey());
+        return new CustomAuthentication(user.getLogin(), user.getRole(), customAuthentication.getKey());
     }
 
     @Override

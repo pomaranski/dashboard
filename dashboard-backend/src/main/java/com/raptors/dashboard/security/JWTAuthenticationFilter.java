@@ -44,7 +44,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             CustomAuthentication authentication = new CustomAuthentication(
                     authUser.getLogin(),
                     authUser.getPassword(),
-                    null,
                     authUser.getKey());
 
             return authenticationManager.authenticate(authentication);
