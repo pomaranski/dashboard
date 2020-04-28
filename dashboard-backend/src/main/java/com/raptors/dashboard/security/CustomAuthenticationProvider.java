@@ -1,7 +1,7 @@
 package com.raptors.dashboard.security;
 
 import com.raptors.dashboard.entities.User;
-import com.raptors.dashboard.services.UserService;
+import com.raptors.dashboard.store.UserStorage;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserService userService;
+    private final UserStorage userStorage;
     private final PasswordEncoder passwordEncoder;
 
-    public CustomAuthenticationProvider(UserService userService) {
-        this.userService = userService;
+    public CustomAuthenticationProvider(UserStorage userStorage) {
+        this.userStorage = userStorage;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -25,7 +25,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         CustomAuthentication customAuthentication = (CustomAuthentication) authentication;
 
-        User user = userService.getUserByLoginOrThrowException(customAuthentication.getName());
+        User user = userStorage.getUserByLoginOrThrowException(customAuthentication.getName());
 
         if (!passwordEncoder.matches(customAuthentication.getCredentials(), user.getHashedPassword())) {
             throw new BadCredentialsException("Invalid password");

@@ -5,11 +5,11 @@ import com.raptors.dashboard.entities.Instance;
 import com.raptors.dashboard.entities.User;
 import com.raptors.dashboard.model.InstanceRequest;
 import com.raptors.dashboard.model.InstanceResponse;
-import com.raptors.dashboard.repositories.UserRepository;
 import com.raptors.dashboard.security.SecurityPropertyHolder;
+import com.raptors.dashboard.store.AddressStorage;
+import com.raptors.dashboard.store.UserStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,23 +25,21 @@ import static java.nio.charset.StandardCharsets.US_ASCII;
 
 @Slf4j
 @Service
-public class UserService {
+public class AuthorizedUserService {
 
-    private final UserRepository userRepository;
-    private final SecurityPropertyHolder securityPropertyHolder;
+    private final UserStorage userStorage;
+    private final AddressStorage addressStorage;
     private final RaptorsClient raptorsClient;
+    private final SecurityPropertyHolder securityPropertyHolder;
 
-    public UserService(UserRepository userRepository,
-                       SecurityPropertyHolder securityPropertyHolder,
-                       RaptorsClient raptorsClient) {
-        this.userRepository = userRepository;
-        this.securityPropertyHolder = securityPropertyHolder;
+    public AuthorizedUserService(UserStorage userStorage,
+                                 AddressStorage addressStorage,
+                                 RaptorsClient raptorsClient,
+                                 SecurityPropertyHolder securityPropertyHolder) {
+        this.userStorage = userStorage;
+        this.addressStorage = addressStorage;
         this.raptorsClient = raptorsClient;
-    }
-
-    public User getUserByLoginOrThrowException(String login) {
-        return userRepository.findByLogin(login)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        this.securityPropertyHolder = securityPropertyHolder;
     }
 
     public ResponseEntity addInstance(String login, String encryptedKey, InstanceRequest instanceRequest) {
@@ -52,37 +50,39 @@ public class UserService {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-        return userRepository.findByLogin(login)
+        return userStorage.findByLogin(login)
                 .map(user -> {
                     log.info("Add instance {} to user {}", instanceRequest.getName(), login);
-                    user.addInstance(mapInstanceRequestToInstance(encryptedKey, instanceRequest));
-                    userRepository.save(user);
-                    return ResponseEntity.ok().build();
-                }).orElseGet(() -> ResponseEntity.notFound().build());
+                    Instance instance = mapInstanceRequestToInstance(encryptedKey, instanceRequest);
+                    addressStorage.storeAddress(instance.getUri());
+                    user.addInstance(instance);
+                    userStorage.storeUser(user);
+                    return ResponseEntity.ok(mapInstanceToInstanceResponse(instance));
+                }).orElse(ResponseEntity.notFound().build());
     }
 
     public ResponseEntity removeInstance(String login, String uuid) {
-        return userRepository.findByLogin(login)
+        return userStorage.findByLogin(login)
                 .map(user -> {
                     log.info("Remove instance {} from user {}", uuid, login);
                     user.removeInstance(uuid);
-                    userRepository.save(user);
+                    userStorage.storeUser(user);
                     return ResponseEntity.ok().build();
-                }).orElseGet(() -> ResponseEntity.notFound().build());
+                }).orElse(ResponseEntity.notFound().build());
     }
 
     public ResponseEntity getInstances(String login) {
-        return userRepository.findByLogin(login)
+        return userStorage.findByLogin(login)
                 .map(user -> ResponseEntity.ok(mapUserInstancesToInstancesResponse(user)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     public ResponseEntity loginToInstance(String login, String encryptedKey, String uuid) {
-        return userRepository.findByLogin(login)
+        return userStorage.findByLogin(login)
                 .map(user -> getInstance(uuid, user)
                         .map(instance -> authenticate(encryptedKey, instance))
                         .orElseGet(() -> ResponseEntity.notFound().build()))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     private ResponseEntity authenticate(String encryptedKey, Instance instance) {
