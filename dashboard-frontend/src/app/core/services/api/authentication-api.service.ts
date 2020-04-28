@@ -3,25 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from '../../models/user';
 import { LoginRequest } from './../../models/requests/login-request';
+import { LoginResponse } from '../../models/responses/login-response';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    // TODO: set to private
-    public currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
+    private tokenSubject: BehaviorSubject<string>;
+    public token: Observable<string>;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(
-            JSON.parse(localStorage.getItem('currentUser'))
+        this.tokenSubject = new BehaviorSubject<string>(
+            localStorage.getItem('token')
         );
-        this.currentUser = this.currentUserSubject.asObservable();
+        this.token = this.tokenSubject.asObservable();
     }
 
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
+    public get currentToken(): string {
+        return this.tokenSubject.value;
     }
 
     private readonly baseUrl = environment.apiBase;
@@ -29,17 +28,16 @@ export class AuthenticationService {
     public login(loginRequest: LoginRequest): Observable<any> {
         const url = `${this.baseUrl}/login`;
         return this.http.post<any>(url, loginRequest).pipe(
-            // TODO: replace with response ang get token from header
-            map((user: User) => {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-                return user;
+            map((loginResponse: LoginResponse) => {
+                localStorage.setItem('token', loginResponse.token);
+                this.tokenSubject.next(loginResponse.token);
+                return loginResponse.token;
             })
         );
     }
 
     public logout(): void {
-        localStorage.removeItem('currentUser');
-        this.currentUserSubject.next(null);
+        localStorage.removeItem('token');
+        this.tokenSubject.next(null);
     }
 }

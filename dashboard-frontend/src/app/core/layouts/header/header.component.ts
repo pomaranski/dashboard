@@ -14,7 +14,7 @@ export class HeaderComponent {
     ) {}
 
     get isLoggedIn(): boolean {
-        const currentUser = this.authenticationService.currentUserValue;
+        const currentUser = this.authenticationService.currentToken;
         if (currentUser) {
             return true;
         }

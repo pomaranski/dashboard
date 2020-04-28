@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from './../../core/services/api/authentication-api.service';
 import { LoginRequest } from 'src/app/core/models/requests/login-request';
-import { User } from "src/app/core/models/user";
 
 @Component({
     selector: 'ngx-login-page',
@@ -15,6 +15,7 @@ export class LoginPageComponent implements OnInit {
     loginForm: FormGroup;
     loading: boolean = false;
     submitted: boolean = false;
+    loginFailed: boolean = false;
 
     private returnUrl: string;
 
@@ -40,29 +41,24 @@ export class LoginPageComponent implements OnInit {
             return;
         }
 
-        // this.loading = true;
-        // this.authenticationService
-        //     .login({
-        //         login: this.form.login.value,
-        //         password: this.form.password.value,
-        //         key: this.form.key.value,
-        //     } as LoginRequest)
-        //     .subscribe(
-        //         (data) => {
-        //             this.router.navigate([this.returnUrl]);
-        //         },
-        //         (error) => {
-        //             this.loading = false;
-        //         }
-        //     );
-        let user = new User();
-        user.login = this.form.login.value;
-        user.password = this.form.password.value;
-        user.token = "abcd";
-
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.authenticationService.currentUserSubject.next(user);
-        this.router.navigate([this.returnUrl]);
+        this.loading = true;
+        this.authenticationService
+            .login({
+                login: this.form.login.value,
+                password: this.form.password.value,
+                key: this.form.key.value,
+            } as LoginRequest)
+            .pipe(first())
+            .subscribe(
+                (data) => {
+                    this.router.navigate([this.returnUrl]);
+                },
+                (error) => {
+                    this.loading = false;
+                    this.loginFailed = true;
+                    this.markAllControlsAsUntouched();
+                }
+            );
     }
 
     private configureForm(): void {
@@ -70,6 +66,12 @@ export class LoginPageComponent implements OnInit {
             login: ['', Validators.required],
             password: ['', Validators.required],
             key: ['', Validators.required],
+        });
+    }
+
+    private markAllControlsAsUntouched(): void {
+        Object.keys(this.form).forEach((key) => {
+            this.loginForm.get(key).markAsUntouched();
         });
     }
 }

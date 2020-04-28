@@ -4,6 +4,18 @@
             <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
             <hr class="text-white" />
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <p class="text-danger" *ngIf="
+                        submitted &&
+                        loginFailed &&
+                        (
+                            form.login.touched ||
+                            form.password.touched ||
+                            form.key.touched
+                        ) == false
+                    "
+                >
+                    Provided wrong login or password or key
+                </p>
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-prepend">
