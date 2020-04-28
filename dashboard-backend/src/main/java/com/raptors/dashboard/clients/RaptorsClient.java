@@ -1,5 +1,6 @@
 package com.raptors.dashboard.clients;
 
+import com.raptors.dashboard.model.TokenResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 @Slf4j
@@ -34,9 +34,8 @@ public class RaptorsClient {
             HttpRequest request = getRequest(uri);
             HttpResponse<String> response = sendRequest(httpClient, request);
             return response.headers().firstValue(SET_COOKIE).map(cookie ->
-                    ResponseEntity.ok()
-                            .header(AUTHORIZATION, cookie)
-                            .build()).orElse(NO_COOKIE);
+                    ResponseEntity.ok().body((Object) new TokenResponse(cookie)))
+                    .orElse(NO_COOKIE);
         } catch (IOException | InterruptedException e) {
             log.error("Cannot connect to {}", uri, e);
             return CANNOT_CONNECT;
