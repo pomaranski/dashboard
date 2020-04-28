@@ -31,7 +31,7 @@ export class LoginPageComponent implements OnInit {
 
     ngOnInit(): void {
         this.configureForm();
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     }
 
     onSubmit(): void {
@@ -59,9 +59,10 @@ export class LoginPageComponent implements OnInit {
         user.login = this.form.login.value;
         user.password = this.form.password.value;
         user.token = "abcd";
-        
+
         localStorage.setItem('currentUser', JSON.stringify(user));
-        this.router.navigate(['/home']);        
+        this.authenticationService.currentUserSubject.next(user);
+        this.router.navigate([this.returnUrl]);
     }
 
     private configureForm(): void {
