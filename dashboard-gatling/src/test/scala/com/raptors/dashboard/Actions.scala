@@ -38,7 +38,6 @@ trait Actions {
            |  "instanceLogin": "$${instanceLogin}",
            |  "instancePassword": "$${instancePassword}",
            |  "sshUri": "$${sshUri}",
-           |  "command": "$${command}",
            |  "hostLogin": "$${hostLogin}",
            |  "hostPassword": "$${hostPassword}"
            |}

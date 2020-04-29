@@ -21,7 +21,5 @@ public class InstanceResponse {
 
     private String sshUri;
 
-    private String command;
-
     private String hostLogin;
 }

@@ -25,7 +25,6 @@ public class InstanceResponseMapper {
                 .httpUri(instance.getHttpUri())
                 .instanceLogin(instance.getInstanceLogin())
                 .sshUri(instance.getSshUri())
-                .command(instance.getCommand())
                 .hostLogin(instance.getHostLogin())
                 .build();
     }

@@ -22,7 +22,6 @@ public class InstanceRequestMapper {
                 .instanceLogin(instanceRequest.getInstanceLogin())
                 .encryptedInstancePassword(cryptoProvider.encryptAes(encryptedKey, instanceRequest.getInstancePassword()))
                 .sshUri(instanceRequest.getSshUri().toString())
-                .command(instanceRequest.getCommand())
                 .hostLogin(instanceRequest.getHostLogin())
                 .encryptedHostPassword(cryptoProvider.encryptAes(encryptedKey, instanceRequest.getHostPassword()))
                 .build();

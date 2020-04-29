@@ -20,7 +20,6 @@ trait Feeder {
         "instanceLogin" -> getRandomString,
         "instancePassword" -> getRandomString,
         "sshUri" -> getSshUri,
-        "command" -> getRandomString,
         "hostLogin" -> getRandomString,
         "hostPassword" -> getRandomString))
 
