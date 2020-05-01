@@ -12,9 +12,10 @@ import { FooterComponent } from './core/layouts/footer/footer.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
 import { MainComponent } from './core/layouts/main/main.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
-import { AppRoutingModule } from './app-routing.module';
+import { AddInstancePageComponent } from './features/instances/add-instance-page/add-instance-page.component';
 import { JwtInterceptor } from './core/interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './core/interceptors/error-interceptor';
+import { AppRoutingModule } from './app-routing.module';
 
 const LAYOUTS = [
     HeaderComponent,
@@ -25,6 +26,7 @@ const LAYOUTS = [
 const PAGES = [
     LoginPageComponent,
     HomePageComponent,
+    AddInstancePageComponent,
 ];
 
 const INTERCEPTORS = [

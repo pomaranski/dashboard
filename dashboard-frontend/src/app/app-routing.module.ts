@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from './core/guards/auth.guard';
 import { MainComponent } from './core/layouts/main/main.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
-import { AuthGuard } from './core/guards/auth.guard';
+import { AddInstancePageComponent } from './features/instances/add-instance-page/add-instance-page.component';
 
 const routes: Routes = [
     {
@@ -19,6 +20,11 @@ const routes: Routes = [
                 path: 'home',
                 canActivate: [AuthGuard],
                 component: HomePageComponent,
+            },
+            {
+                path: 'instances/add',
+                canActivate: [AuthGuard],
+                component: AddInstancePageComponent,
             },
             {
                 path: '**',
