@@ -20,15 +20,33 @@ public class InstanceRequest implements Validated {
 
     private URI uri;
 
-    private String login;
+    private Boolean isHttps;
 
-    private String password;
+    private Integer httpPort;
+
+    private String instanceLogin;
+
+    private String instancePassword;
+
+    private Integer sshPort;
+
+    private String command;
+
+    private String hostLogin;
+
+    private String hostPassword;
 
     @Override
     public void validate() {
         notBlank(name, "Invalid name format");
         notNull(uri, "Invalid uri format");
-        notBlank(login, "Invalid login format");
-        notBlank(password, "Invalid password format");
+        notNull(isHttps, "Invalid http protocol format");
+        notNull(httpPort, "Invalid http port format");
+        notBlank(instanceLogin, "Invalid instance login format");
+        notBlank(instancePassword, "Invalid instance password format");
+        notNull(sshPort, "Invalid ssh port format");
+        notBlank(command, "Invalid command format");
+        notBlank(hostLogin, "Invalid host login format");
+        notBlank(hostPassword, "Invalid host password format");
     }
 }

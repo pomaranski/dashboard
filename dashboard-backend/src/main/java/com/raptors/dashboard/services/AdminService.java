@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,10 +26,10 @@ public class AdminService {
     public ResponseEntity getAllUnAssignedUri(String login) {
         return userStorage.findByLogin(login)
                 .map(user -> {
-                    Set<URI> uris = addressStorage.fetchAllAddress();
+                    Set<String> uris = addressStorage.fetchAllAddress();
                     uris.removeAll(user.getInstances()
                             .stream()
-                            .map(Instance::getUri)
+                            .map(Instance::getHostUri)
                             .collect(Collectors.toSet()));
                     return ResponseEntity.ok(uris);
                 }).orElse(ResponseEntity.notFound().build());

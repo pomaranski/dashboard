@@ -4,13 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.net.URI;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
 @Builder
 public class InstanceResponse {
@@ -19,5 +15,17 @@ public class InstanceResponse {
 
     private String name;
 
-    private URI uri;
+    private String hostUri;
+
+    private Boolean isHttps;
+
+    private Integer httpPort;
+
+    private String instanceLogin;
+
+    private Integer sshPort;
+
+    private String command;
+
+    private String hostLogin;
 }

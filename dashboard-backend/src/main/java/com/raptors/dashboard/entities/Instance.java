@@ -1,10 +1,9 @@
 package com.raptors.dashboard.entities;
 
+import com.raptors.dashboard.model.HttpProtocol;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.net.URI;
 
 @Builder
 @Getter
@@ -15,9 +14,21 @@ public class Instance {
 
     private String name;
 
-    private URI uri;
+    private String hostUri;
 
-    private String login;
+    private HttpProtocol httpProtocol;
 
-    private String encryptedPassword;
+    private Integer httpPort;
+
+    private String instanceLogin;
+
+    private String encryptedInstancePassword;
+
+    private Integer sshPort;
+
+    private String command;
+
+    private String hostLogin;
+
+    private String encryptedHostPassword;
 }

@@ -5,7 +5,6 @@ import com.raptors.dashboard.repositories.AddressRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -20,7 +19,7 @@ public class AddressStorage {
         this.addressRepository = addressRepository;
     }
 
-    public void storeAddress(URI uri) {
+    public void storeAddress(String uri) {
         StreamSupport.stream(addressRepository.findAll().spliterator(), true)
                 .filter(address -> address.getUri().equals(uri))
                 .findAny()
@@ -31,7 +30,7 @@ public class AddressStorage {
                                 .build()));
     }
 
-    public Set<URI> fetchAllAddress() {
+    public Set<String> fetchAllAddress() {
         return StreamSupport.stream(addressRepository.findAll().spliterator(), true)
                 .map(Address::getUri)
                 .collect(Collectors.toSet());

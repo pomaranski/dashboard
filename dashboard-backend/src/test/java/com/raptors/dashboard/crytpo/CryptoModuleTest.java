@@ -3,12 +3,14 @@ package com.raptors.dashboard.crytpo;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.net.URI;
+
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
 public class CryptoModuleTest {
 
     @Test
-    public void encryptAndDecryptAes() throws Exception {
+    public void encryptAndDecryptAes() {
         String key = "645813e7988e88827c62148a27b1624f";
         String data = "data";
 
@@ -19,6 +21,16 @@ public class CryptoModuleTest {
         byte[] decrypted = CryptoModule.decryptAes(HexUtils.hexToBytes(key), encrypted);
 
         Assert.assertEquals(data, new String(decrypted, US_ASCII));
+    }
+
+    @Test
+    public void test() {
+        String address = "http://localhost:8080";
+        String data = "data";
+
+        Assert.assertEquals("localhost", URI.create(address).getHost());
+        Assert.assertEquals(8080, URI.create(address).getPort());
+        Assert.assertEquals("http", URI.create(address).getScheme());
     }
 
 }
