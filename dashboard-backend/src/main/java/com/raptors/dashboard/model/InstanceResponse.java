@@ -15,15 +15,11 @@ public class InstanceResponse {
 
     private String name;
 
-    private String hostUri;
-
-    private Boolean isHttps;
-
-    private Integer httpPort;
+    private String httpUri;
 
     private String instanceLogin;
 
-    private Integer sshPort;
+    private String sshUri;
 
     private String command;
 

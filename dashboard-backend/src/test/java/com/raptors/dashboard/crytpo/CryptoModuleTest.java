@@ -1,9 +1,13 @@
 package com.raptors.dashboard.crytpo;
 
+import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.net.URI;
+import javax.crypto.Cipher;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
@@ -24,13 +28,28 @@ public class CryptoModuleTest {
     }
 
     @Test
-    public void test() {
-        String address = "http://localhost:8080";
+    public void encryptAndDecryptRsa() throws NoSuchAlgorithmException {
+        KeyPair key = getKeyPair();
         String data = "data";
 
-        Assert.assertEquals("localhost", URI.create(address).getHost());
-        Assert.assertEquals(8080, URI.create(address).getPort());
-        Assert.assertEquals("http", URI.create(address).getScheme());
+        byte[] encrypted = CryptoModule.encryptRsa(key.getPublic().getEncoded(), data.getBytes(US_ASCII));
+
+        byte[] decrypted = decrypt(key, encrypted);
+
+        Assert.assertEquals(data, new String(decrypted, US_ASCII));
+    }
+
+    @SneakyThrows
+    private byte[] decrypt(KeyPair key, byte[] encrypted) {
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher.init(Cipher.DECRYPT_MODE, key.getPrivate());
+        return cipher.doFinal(encrypted);
+    }
+
+    private KeyPair getKeyPair() throws NoSuchAlgorithmException {
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+        keyGen.initialize(1024);
+        return keyGen.generateKeyPair();
     }
 
 }

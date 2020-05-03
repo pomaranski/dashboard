@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-import static com.raptors.dashboard.crytpo.CryptoModule.decryptAes;
-import static com.raptors.dashboard.crytpo.CryptoModule.encryptAes;
 import static com.raptors.dashboard.crytpo.HexUtils.bytesToHex;
 import static com.raptors.dashboard.crytpo.HexUtils.hexToBytes;
 import static java.nio.charset.StandardCharsets.US_ASCII;
@@ -20,18 +18,22 @@ public class CryptoProvider {
         this.securityPropertyHolder = securityPropertyHolder;
     }
 
-    public String encrypt(String encryptedKey, String data) {
-        byte[] plainKey = decryptAes(hexToBytes(securityPropertyHolder.getKek()), hexToBytes(encryptedKey));
-        String encrypted = bytesToHex(encryptAes(plainKey, data.getBytes(US_ASCII)));
+    public String encryptAes(String encryptedKey, String data) {
+        byte[] plainKey = CryptoModule.decryptAes(hexToBytes(securityPropertyHolder.getKek()), hexToBytes(encryptedKey));
+        String encrypted = bytesToHex(CryptoModule.encryptAes(plainKey, data.getBytes(US_ASCII)));
         clearKey(plainKey);
         return encrypted;
     }
 
-    public String decrypt(String encryptedKey, String data) {
-        byte[] plainKey = decryptAes(hexToBytes(securityPropertyHolder.getKek()), hexToBytes(encryptedKey));
-        String decrypted = new String(decryptAes(plainKey, hexToBytes(data)), US_ASCII);
+    public String decryptAes(String encryptedKey, String data) {
+        byte[] plainKey = CryptoModule.decryptAes(hexToBytes(securityPropertyHolder.getKek()), hexToBytes(encryptedKey));
+        String decrypted = new String(CryptoModule.decryptAes(plainKey, hexToBytes(data)), US_ASCII);
         clearKey(plainKey);
         return decrypted;
+    }
+
+    public String encryptRsa(String hexKey, String data) {
+        return bytesToHex(CryptoModule.encryptRsa(hexToBytes(hexKey), data.getBytes(US_ASCII)));
     }
 
     private void clearKey(byte[] key) {

@@ -29,7 +29,7 @@ public class AdminService {
                     Set<String> uris = addressStorage.fetchAllAddress();
                     uris.removeAll(user.getInstances()
                             .stream()
-                            .map(Instance::getHostUri)
+                            .map(Instance::getHttpUri)
                             .collect(Collectors.toSet()));
                     return ResponseEntity.ok(uris);
                 }).orElse(ResponseEntity.notFound().build());

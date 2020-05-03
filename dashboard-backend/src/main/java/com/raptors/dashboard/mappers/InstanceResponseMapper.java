@@ -1,7 +1,6 @@
 package com.raptors.dashboard.mappers;
 
 import com.raptors.dashboard.entities.Instance;
-import com.raptors.dashboard.model.HttpProtocol;
 import com.raptors.dashboard.model.InstanceResponse;
 
 import java.util.List;
@@ -23,16 +22,11 @@ public class InstanceResponseMapper {
         return InstanceResponse.builder()
                 .uuid(instance.getUuid())
                 .name(instance.getName())
-                .hostUri(instance.getHostUri())
-                .isHttps(isHttps(instance))
-                .httpPort(instance.getHttpPort())
+                .httpUri(instance.getHttpUri())
                 .instanceLogin(instance.getInstanceLogin())
-                .sshPort(instance.getSshPort())
+                .sshUri(instance.getSshUri())
+                .command(instance.getCommand())
                 .hostLogin(instance.getHostLogin())
                 .build();
-    }
-
-    private static boolean isHttps(Instance instance) {
-        return instance.getHttpProtocol() == HttpProtocol.HTTPS;
     }
 }

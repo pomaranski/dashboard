@@ -1,5 +1,6 @@
 package com.raptors.dashboard.controllers;
 
+import com.raptors.dashboard.model.CredentialsRequest;
 import com.raptors.dashboard.model.InstanceRequest;
 import com.raptors.dashboard.security.CustomToken;
 import com.raptors.dashboard.services.AuthorizedUserService;
@@ -24,7 +25,7 @@ public class AuthorizedUserController {
     static final String USER_PATH = "/user";
 
     private static final String INSTANCE = "/instance";
-    private static final String INSTANCE_UUID_LOGIN = "/instance/{uuid}/login";
+    private static final String INSTANCE_UUID_CREDENTIALS = "/instance/{uuid}/credentials";
     private static final String INSTANCE_UUID = "/instance/{uuid}";
 
     private final AuthorizedUserService authorizedUserService;
@@ -38,10 +39,11 @@ public class AuthorizedUserController {
         return authorizedUserService.getInstances(token.getPrincipal());
     }
 
-    @PostMapping(INSTANCE_UUID_LOGIN)
-    public ResponseEntity loginToInstance(@PathVariable("uuid") String uuid,
-                                          CustomToken token) {
-        return authorizedUserService.loginToInstance(token.getPrincipal(), token.getKey(), uuid);
+    @PostMapping(INSTANCE_UUID_CREDENTIALS)
+    public ResponseEntity getCredentials(@PathVariable("uuid") String uuid,
+                                         @RequestBody CredentialsRequest credentialsRequest,
+                                         CustomToken token) {
+        return authorizedUserService.getCredentials(token.getPrincipal(), token.getKey(), uuid, credentialsRequest);
     }
 
     @DeleteMapping(INSTANCE_UUID)

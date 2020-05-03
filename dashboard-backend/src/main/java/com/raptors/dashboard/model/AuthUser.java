@@ -22,8 +22,8 @@ public class AuthUser implements Validated {
 
     @Override
     public void validate() {
-        notBlank(login, "Invalid login format");
-        notBlank(login, "Invalid login format");
+        notBlank(login, "Login cannot be blank");
+        notBlank(password, "Password cannot be blank");
         matchesPattern(key, "\\p{XDigit}{32}", "Invalid key format");
     }
 }
