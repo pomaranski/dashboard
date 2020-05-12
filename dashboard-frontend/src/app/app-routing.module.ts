@@ -6,6 +6,7 @@ import { MainComponent } from './core/layouts/main/main.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { AddInstancePageComponent } from './features/instances/add-instance-page/add-instance-page.component';
+import { InstancePageComponent } from './features/instances/instance-page/instance-page.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,11 @@ const routes: Routes = [
                 component: AddInstancePageComponent,
             },
             {
+                path: 'instances',
+                canActivate: [AuthGuard],
+                component: InstancePageComponent,
+            },
+            {
                 path: '**',
                 redirectTo: '',
             },
@@ -36,6 +42,6 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
+exports: [RouterModule],
 })
 export class AppRoutingModule {}

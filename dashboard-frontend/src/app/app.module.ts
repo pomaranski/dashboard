@@ -6,6 +6,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
+import { AppRoutingModule } from './app-routing.module';
+import { JwtInterceptor } from './core/interceptors/jwt-interceptor';
+import { ErrorInterceptor } from './core/interceptors/error-interceptor';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/layouts/header/header.component';
 import { FooterComponent } from './core/layouts/footer/footer.component';
@@ -13,9 +16,7 @@ import { LoginPageComponent } from './features/login-page/login-page.component';
 import { MainComponent } from './core/layouts/main/main.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { AddInstancePageComponent } from './features/instances/add-instance-page/add-instance-page.component';
-import { JwtInterceptor } from './core/interceptors/jwt-interceptor';
-import { ErrorInterceptor } from './core/interceptors/error-interceptor';
-import { AppRoutingModule } from './app-routing.module';
+import { InstancePageComponent } from './features/instances/instance-page/instance-page.component';
 
 const LAYOUTS = [
     HeaderComponent,
@@ -27,6 +28,7 @@ const PAGES = [
     LoginPageComponent,
     HomePageComponent,
     AddInstancePageComponent,
+    InstancePageComponent,
 ];
 
 const INTERCEPTORS = [

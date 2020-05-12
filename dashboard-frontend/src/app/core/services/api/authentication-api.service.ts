@@ -25,7 +25,7 @@ export class AuthenticationService {
 
     private readonly baseUrl = environment.apiBase;
 
-    public login(loginRequest: LoginRequest): Observable<any> {
+    public login(loginRequest: LoginRequest): Observable<string> {
         const url = `${this.baseUrl}/login`;
         return this.http.post<any>(url, loginRequest).pipe(
             map((loginResponse: LoginResponse) => {
