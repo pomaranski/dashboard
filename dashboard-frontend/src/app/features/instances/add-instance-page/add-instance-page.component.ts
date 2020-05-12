@@ -39,12 +39,10 @@ export class AddInstancePageComponent implements OnInit {
         this.userApiService
             .addInstance({
                 name: this.form.name.value,
-                uri: this.form.uri.value,
-                isHttps: this.form.isHttps.value,
-                httpPort: this.form.httpPort.value,
+                httpUri: this.form.httpUri.value,
                 instanceLogin: this.form.instanceLogin.value,
                 instancePassword: this.form.instancePassword.value,
-                sshPort: this.form.sshPort.value,
+                sshUri: this.form.sshUri.value,
                 command: this.form.command.value,
                 hostLogin: this.form.hostLogin.value,
                 hostPassword: this.form.hostPassword.value,
@@ -64,12 +62,10 @@ export class AddInstancePageComponent implements OnInit {
     private configureForm(): void {
         this.addInstanceForm = this.formBuilder.group({
             name: ['', Validators.required],
-            uri: ['', Validators.required],
-            isHttps: [false],
-            httpPort: [0, Validators.required],
+            httpUri: ['', Validators.required],
             instanceLogin: ['', Validators.required],
             instancePassword: ['', Validators.required],
-            sshPort: [0, Validators.required],
+            sshUri: ['', Validators.required],
             command: ['', Validators.required],
             hostLogin: ['', Validators.required],
             hostPassword: ['', Validators.required],

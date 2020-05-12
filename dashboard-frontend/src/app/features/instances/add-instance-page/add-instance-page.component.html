@@ -33,67 +33,23 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Uri</label>
+                    <label>Http Uri</label>
                     <div class="input-group">
                         <input
                             class="form-control bg-dark text-white"
-                            placeholder="Uri"
+                            placeholder="Http Uri"
                             type="text"
-                            formControlName="uri"
+                            formControlName="httpUri"
                             [ngClass]="{
-                                'is-invalid': submitted && form.uri.errors
+                                'is-invalid': submitted && form.httpUri.errors
                             }"
                         />
                         <div
-                            *ngIf="submitted && form.uri.errors"
+                            *ngIf="submitted && form.httpUri.errors"
                             class="invalid-feedback"
                         >
-                            <div *ngIf="form.uri.errors.required">
-                                Uri is required
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row align-items-center">
-                    <div class="col">
-                        <div class="form-check ml-4 align-items-end">
-                            <div class="input-group">
-                                <input
-                                    type="checkbox"
-                                    class="form-check-input"
-                                    formControlName="isHttps"
-                                />
-                                <label
-                                    class="form-check-label"
-                                    for="exampleCheck1"
-                                    >Is Https</label
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Http Port</label>
-                            <div class="input-group">
-                                <input
-                                    class="form-control bg-dark text-white"
-                                    placeholder="Http Port"
-                                    type="number"
-                                    formControlName="httpPort"
-                                    [ngClass]="{
-                                        'is-invalid':
-                                            submitted && form.httpPort.errors
-                                    }"
-                                />
-                                <div
-                                    *ngIf="submitted && form.httpPort.errors"
-                                    class="invalid-feedback"
-                                >
-                                    <div *ngIf="form.httpPort.errors.required">
-                                        Http Port is required
-                                    </div>
-                                </div>
+                            <div *ngIf="form.httpUri.errors.required">
+                                Http Uri is required
                             </div>
                         </div>
                     </div>
@@ -166,35 +122,30 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Ssh Port</label>
-                            <div class="input-group">
-                                <input
-                                    class="form-control bg-dark text-white"
-                                    placeholder="Ssh Port"
-                                    type="number"
-                                    formControlName="sshPort"
-                                    [ngClass]="{
-                                        'is-invalid':
-                                            submitted && form.sshPort.errors
-                                    }"
-                                />
-                                <div
-                                    *ngIf="submitted && form.sshPort.errors"
-                                    class="invalid-feedback"
-                                >
-                                    <div *ngIf="form.sshPort.errors.required">
-                                        Ssh Port is required
-                                    </div>
+                    <div class="form-group">
+                        <label>Ssh Uri</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control bg-dark text-white"
+                                placeholder="Ssh Uri"
+                                type="number"
+                                formControlName="sshUri"
+                                [ngClass]="{
+                                    'is-invalid':
+                                        submitted && form.sshUri.errors
+                                }"
+                            />
+                            <div
+                                *ngIf="submitted && form.sshUri.errors"
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="form.sshUri.errors.required">
+                                    Ssh Uri is required
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col"></div>
                 </div>
 
                 <div class="form-group">

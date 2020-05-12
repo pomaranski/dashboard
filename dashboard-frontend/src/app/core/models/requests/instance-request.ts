@@ -1,11 +1,9 @@
 export class InstanceRequest {
     name: string;
-    uri: string;
-    isHttps: boolean;
-    httpPort: number;
+    httpUri: string;
     instanceLogin: string;
     instancePassword: string;
-    sshPort: number;
+    sshUri: number;
     command: string;
     hostLogin: string;
     hostPassword: string;
