@@ -3,15 +3,14 @@ package com.raptors.dashboard.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static ch.qos.logback.core.CoreConstants.EMPTY_STRING;
 import static com.raptors.dashboard.crytpo.HexUtils.hexToBytes;
@@ -20,6 +19,7 @@ import static com.raptors.dashboard.security.SecurityConstants.ROLE;
 import static com.raptors.dashboard.security.SecurityConstants.TOKEN_PREFIX;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+@Slf4j
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final SecurityPropertyHolder securityPropertyHolder;
@@ -33,18 +33,23 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
-                                    FilterChain chain) throws IOException, ServletException {
-        String header = req.getHeader(AUTHORIZATION);
+                                    FilterChain chain) {
+        try {
+            String header = req.getHeader(AUTHORIZATION);
 
-        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+            if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+                chain.doFilter(req, res);
+                return;
+            }
+
+            CustomToken authentication = getAuthentication(req);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(req, res);
-            return;
+        } catch (Exception e) {
+            log.error("Exception during token verification: {}", e.getMessage());
+            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
-
-        CustomToken authentication = getAuthentication(req);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(req, res);
     }
 
     private CustomToken getAuthentication(HttpServletRequest request) {
