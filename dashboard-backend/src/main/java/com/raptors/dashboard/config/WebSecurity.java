@@ -41,7 +41,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .requestMatchers(forPortAndPath(managementPort, "/dashboard/register")).permitAll()
+                .requestMatchers(forPortAndPath(managementPort, "/dashboard/register/**")).permitAll()
                 .antMatchers("/admin/**").hasRole(adminRole())
                 .antMatchers("/user/**").hasAnyRole(ownerRole(), adminRole())
                 .anyRequest().authenticated()

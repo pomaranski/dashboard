@@ -22,6 +22,8 @@ import java.util.List;
 public class RegistrationController {
 
     private static final String REGISTER = "/register";
+    private static final String REGISTER_OWNER = REGISTER + "/owner";
+    private static final String REGISTER_ADMIN = REGISTER + "/admin";
     private final UserStorage userStorage;
     private final PasswordEncoder passwordEncoder;
 
@@ -31,12 +33,25 @@ public class RegistrationController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping(path = REGISTER,
+    @PostMapping(path = REGISTER_ADMIN,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity registerAdmin(@RequestBody AuthUser authUser) {
         log.info("Received request to register admin: login={}", authUser.getLogin());
 
+        return register(authUser, Role.ROLE_ADMIN);
+    }
+
+    @PostMapping(path = REGISTER_OWNER,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity registerOwner(@RequestBody AuthUser authUser) {
+        log.info("Received request to register owner: login={}", authUser.getLogin());
+
+        return register(authUser, Role.ROLE_OWNER);
+    }
+
+    private ResponseEntity register(AuthUser authUser, Role role) {
         try {
             authUser.validate();
         } catch (RuntimeException e) {
@@ -48,11 +63,11 @@ public class RegistrationController {
                 .login(authUser.getLogin())
                 .hashedPassword(passwordEncoder.encode(authUser.getPassword()))
                 .hashedKey(passwordEncoder.encode(authUser.getKey()))
-                .role(Role.ROLE_ADMIN)
+                .role(role)
                 .instances(List.of())
                 .build());
 
-        log.info("Admin registered: login={}", authUser.getLogin());
+        log.info("Registered: login={}", authUser.getLogin());
 
         return ResponseEntity.ok().build();
     }

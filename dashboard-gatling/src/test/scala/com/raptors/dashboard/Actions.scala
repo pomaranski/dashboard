@@ -77,9 +77,9 @@ trait Actions {
       .check()
   }
 
-  def register(): HttpRequestBuilder = {
-    http("register")
-      .post(s"${managementBaseUrl}/register")
+  def registerAdmin(): HttpRequestBuilder = {
+    http("register admin")
+      .post(s"${managementBaseUrl}/register/admin")
       .body(StringBody(
         s"""
            |{

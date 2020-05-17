@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Builder
 @Getter
@@ -38,11 +36,15 @@ public class User {
         instances.add(instance);
     }
 
-    public void removeInstance(String uuid) {
+    public boolean removeInstance(String uuid) {
         if (instances != null) {
-            instances = instances.stream()
-                    .filter(instance -> !instance.getUuid().equals(uuid))
-                    .collect(Collectors.toList());
+            return instances.stream()
+                    .filter(instance -> instance.getUuid().equals(uuid))
+                    .findFirst()
+                    .map(instance -> instances.remove(instance))
+                    .orElse(false);
         }
+
+        return false;
     }
 }

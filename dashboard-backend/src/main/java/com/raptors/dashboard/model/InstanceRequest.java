@@ -1,6 +1,7 @@
 package com.raptors.dashboard.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import static org.apache.commons.lang3.Validate.notNull;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class InstanceRequest implements Validated {
 
     private static final String HTTP_SCHEME_REGEX = "^(http|https)";
