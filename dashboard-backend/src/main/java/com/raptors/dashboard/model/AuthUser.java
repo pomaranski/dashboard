@@ -1,6 +1,7 @@
 package com.raptors.dashboard.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import static org.apache.commons.lang3.Validate.notBlank;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class AuthUser implements Validated {
 
     private String login;

@@ -57,9 +57,14 @@ public class AuthorizedUserService {
         return userStorage.findByLogin(login)
                 .map(user -> {
                     log.info("Remove instance {} from user {}", uuid, login);
-                    user.removeInstance(uuid);
-                    userStorage.storeUser(user);
-                    return ResponseEntity.ok().build();
+                    if (user.removeInstance(uuid)) {
+                        log.info("Instance {} removed from user {}", uuid, login);
+                        userStorage.storeUser(user);
+                        return ResponseEntity.ok().build();
+                    } else {
+                        log.info("Instance {} not found from user {}", uuid, login);
+                        return ResponseEntity.notFound().build();
+                    }
                 }).orElse(ResponseEntity.notFound().build());
     }
 

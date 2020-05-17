@@ -21,7 +21,7 @@ class RecordedSimulation extends Simulation with Actions with Feeder {
   val addInstanceScenario: ScenarioBuilder = scenario("Add instance")
     .feed(adminCredentialsFeeder)
     .feed(instanceFeeder)
-    .exec(register())
+    .exec(registerAdmin())
     .exec(loginAdmin())
     .repeat(addInstanceRepeats) {
       feed(instanceFeeder)
@@ -31,7 +31,7 @@ class RecordedSimulation extends Simulation with Actions with Feeder {
   val removeInstanceScenario: ScenarioBuilder = scenario("Remove instance")
     .feed(adminCredentialsFeeder)
     .feed(instanceFeeder)
-    .exec(register())
+    .exec(registerAdmin())
     .exec(loginAdmin())
     .repeat(removeInstancesNumber) {
       feed(instanceFeeder)
@@ -42,7 +42,7 @@ class RecordedSimulation extends Simulation with Actions with Feeder {
   val getAllInstancesScenario: ScenarioBuilder = scenario("Get all instances")
     .feed(adminCredentialsFeeder)
     .feed(instanceFeeder)
-    .exec(register())
+    .exec(registerAdmin())
     .exec(loginAdmin())
     .repeat(getInstancesNumber) {
       feed(instanceFeeder)
@@ -56,7 +56,7 @@ class RecordedSimulation extends Simulation with Actions with Feeder {
   val getCredentialsScenario: ScenarioBuilder = scenario("Get credentials")
     .feed(adminCredentialsFeeder)
     .feed(getCredentialsFeeder)
-    .exec(register())
+    .exec(registerAdmin())
     .exec(loginAdmin())
     .repeat(getCredentialsInstances) {
       feed(instanceFeeder)
@@ -70,7 +70,7 @@ class RecordedSimulation extends Simulation with Actions with Feeder {
   val getUnassignedScenario: ScenarioBuilder = scenario("Get unassigned")
     .feed(adminCredentialsFeeder)
     .feed(instanceFeeder)
-    .exec(register())
+    .exec(registerAdmin())
     .exec(loginAdmin())
     .exec(addInstance())
     .exec(getUnassigned())
