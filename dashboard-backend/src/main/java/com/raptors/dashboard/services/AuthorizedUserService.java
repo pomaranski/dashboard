@@ -44,8 +44,8 @@ public class AuthorizedUserService {
 
         return userStorage.findByLogin(login)
                 .map(user -> {
-                    log.info("Add instance {} for user {}", instanceRequest.getName(), login);
                     Instance instance = mapToInstance(instanceRequest, encryptedKey, cryptoProvider);
+                    log.info("Add instance {} for user {}", instance.getUuid(), login);
                     addressStorage.storeAddress(instance.getHttpUri());
                     user.addInstance(instance);
                     userStorage.storeUser(user);
