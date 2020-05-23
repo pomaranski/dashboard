@@ -2,7 +2,9 @@ package com.raptors.dashboard.integration;
 
 import com.raptors.dashboard.model.AuthUser;
 import com.raptors.dashboard.model.CredentialsRequest;
+import com.raptors.dashboard.model.ExecuteCommandRequest;
 import com.raptors.dashboard.model.InstanceRequest;
+import com.raptors.dashboard.model.InstanceResponse;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.SneakyThrows;
@@ -127,8 +129,20 @@ public class Requests {
                 .instanceLogin(randomString())
                 .instancePassword(randomString())
                 .sshUri(randomSshUri())
-                .command(randomString())
                 .build();
+    }
+
+    public static Response whenExecuteCommand(String token, InstanceResponse instanceRequest) {
+        return whenExecuteCommand(token, instanceRequest, "bash test.sh");
+    }
+
+    public static Response whenExecuteCommand(String token, InstanceResponse instanceRequest, String command) {
+        return given()
+                .port(port)
+                .auth().oauth2(token)
+                .contentType(ContentType.JSON)
+                .body(new ExecuteCommandRequest(command))
+                .post("/user/instance/{instanceId}/execute", instanceRequest.getUuid());
     }
 
     private static String randomString() {

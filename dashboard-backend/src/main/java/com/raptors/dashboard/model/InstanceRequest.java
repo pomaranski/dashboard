@@ -32,8 +32,6 @@ public class InstanceRequest implements Validated {
 
     private URI sshUri;
 
-    private String command;
-
     private String hostLogin;
 
     private String hostPassword;
@@ -49,7 +47,6 @@ public class InstanceRequest implements Validated {
         notNull(sshUri, "Ssh uri is null");
         isTrue(sshUri.getScheme().matches(SSH_SCHEME_REGEX), "Ssh uri has not ssh scheme");
         notBlank(sshUri.getHost(), "Ssh host is blank");
-        notBlank(command, "Command cannot be blank");
         notBlank(hostLogin, "Host login cannot be blank");
         notBlank(hostPassword, "Host password cannot be blank");
     }
