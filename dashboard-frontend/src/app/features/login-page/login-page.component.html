@@ -4,7 +4,7 @@
             <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
             <hr class="text-white" />
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <p class="text-danger" *ngIf="
+                <p class="text-danger" data-automation="wrong-logincredentials-text" *ngIf="
                         submitted &&
                         loginFailed &&
                         (
