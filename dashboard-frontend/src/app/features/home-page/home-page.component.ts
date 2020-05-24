@@ -9,7 +9,10 @@ import { InstanceResponse } from './../../core/models/responses/instance-respons
     templateUrl: './home-page.component.html',
 })
 export class HomePageComponent implements OnInit {
-    constructor(private router: Router, private userApiService: UserApiService) {}
+    constructor(
+        private router: Router,
+        private userApiService: UserApiService,
+    ) {}
 
     instances: InstanceResponse[] = [];
     selectedInstance: InstanceResponse;
@@ -26,16 +29,13 @@ export class HomePageComponent implements OnInit {
     }
 
     loginToInstance(instance: InstanceResponse): void {
-        this.router.navigate(['/instances']);
-        // this.userApiService.loginToInstance(instance.uuid).subscribe(
-        //     (data) => {
-        //         console.log(data);
-        //         this.router.navigate(['/instances']);
-        //     },
-        //     (error) => {
-        //         console.log(error);
-        //     }
-        // )
+        this.router.navigate([
+            '/instances',
+            {
+                instanceId: instance.uuid,
+                instanceUrl: instance.httpUri,
+            },
+        ]);
     }
 
     openRemoveInstanceModal(instance: InstanceResponse): void {
