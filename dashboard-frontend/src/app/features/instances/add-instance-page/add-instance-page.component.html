@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center justify-content-center mt-5">
+<div class="d-flex align-items-center justify-content-center mt-5" data-automation="add-instance-page">
     <div class="card bg-dark text-white shadow-lg w-50">
         <div class="card-body">
             <h4 class="card-title text-center mb-4 mt-1">Add instance</h4>
@@ -20,6 +20,7 @@
                             [ngClass]="{
                                 'is-invalid': submitted && form.name.errors
                             }"
+                            data-automation="name-input"
                         />
                         <div
                             *ngIf="submitted && form.name.errors"
@@ -43,6 +44,7 @@
                             [ngClass]="{
                                 'is-invalid': submitted && form.httpUri.errors
                             }"
+                            data-automation="http-uri-input"
                         />
                         <div
                             *ngIf="submitted && form.httpUri.errors"
@@ -70,6 +72,7 @@
                                             submitted &&
                                             form.instanceLogin.errors
                                     }"
+                                    data-automation="instance-login-input"
                                 />
                                 <div
                                     *ngIf="
@@ -102,6 +105,7 @@
                                             submitted &&
                                             form.instancePassword.errors
                                     }"
+                                    data-automation="instance-password-input"
                                 />
                                 <div
                                     *ngIf="
@@ -135,6 +139,7 @@
                                 'is-invalid':
                                     submitted && form.sshUri.errors
                             }"
+                            data-automation="ssh-uri-input"
                         />
                         <div
                             *ngIf="submitted && form.sshUri.errors"
@@ -158,6 +163,7 @@
                             [ngClass]="{
                                 'is-invalid': submitted && form.command.errors
                             }"
+                            data-automation="command-input"
                         />
                         <div
                             *ngIf="submitted && form.command.errors"
@@ -184,6 +190,7 @@
                                         'is-invalid':
                                             submitted && form.hostLogin.errors
                                     }"
+                                    data-automation="host-login-input"
                                 />
                                 <div
                                     *ngIf="submitted && form.hostLogin.errors"
@@ -210,6 +217,7 @@
                                             submitted &&
                                             form.hostPassword.errors
                                     }"
+                                    data-automation="host-password-input"
                                 />
                                 <div
                                     *ngIf="
@@ -231,7 +239,7 @@
                 </div>
 
                 <div class="form-group mt-5">
-                    <button type="submit" class="btn btn-primary btn-block">
+                    <button type="submit" class="btn btn-primary btn-block" data-automation="submit-instance-button">
                         <span
                             *ngIf="loading"
                             class="spinner-border spinner-border-sm mr-1"

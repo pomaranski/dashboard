@@ -1,10 +1,10 @@
-<div class="jumbotron bg-dark text-light">
+<div class="jumbotron bg-dark text-light" data-automation="home-page">
   <h1>Welcome</h1>
   <p class="lead">Choose one of the instances assigned to you:</p>
-  <a routerLink="/instances/add" class="btn btn-success">Add instance</a>
+  <a routerLink="/instances/add" class="btn btn-success" data-automation="add-instance-button">Add instance</a>
 </div>
 <div class="row">
-  <div *ngFor="let instance of instances" class="col-md-6 col-lg-4 col-xl-3 text-light">
+  <div *ngFor="let instance of instances" class="col-md-6 col-lg-4 col-xl-3 text-light" [attr.data-automation]="instance.name">
       <h2>{{instance.name}}</h2>
       <p><a target="_blank" (click)="loginToInstance(instance)" class="btn btn-success">Login</a></p>
   </div>
