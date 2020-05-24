@@ -18,6 +18,7 @@ export class HomePageComponent implements OnInit {
 
     instances: InstanceResponse[] = [];
     selectedInstance: InstanceResponse;
+    selectedInstanceId: string;
 
     ngOnInit(): void {
         this.userApiService.getInstances().subscribe(
@@ -48,6 +49,10 @@ export class HomePageComponent implements OnInit {
 
     openRemoveInstanceModal(instance: InstanceResponse): void {
         this.selectedInstance = instance;
+    }
+
+    openExecuteCommandModal(instance: InstanceResponse): void {
+        this.selectedInstanceId = instance.uuid;
     }
 
     removeInstance(): void {

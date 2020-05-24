@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';    
+import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr'; 
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -21,6 +22,7 @@ import { AddInstancePageComponent } from './features/instances/add-instance-page
 import { InstancePageComponent } from './features/instances/instance-page/instance-page.component';
 import { UnassignedInstancesComponent } from './features/instances/unassigned-instances-page/unassigned-instances-page.component';
 import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
+import { ExecuteCommandModalComponent } from './features/instances/execute-command-modal/execute-command-modal.component';
 import { SafePipe } from './core/pipes/safe.pipe';
 
 const LAYOUTS = [
@@ -38,7 +40,8 @@ const PAGES = [
 ];
 
 const COMPONENTS = [
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    ExecuteCommandModalComponent,
 ];
 
 const PIPES = [
@@ -64,7 +67,8 @@ const INTERCEPTORS = [
         AppRoutingModule,
         HttpClientModule,
         FontAwesomeModule,
-        BrowserAnimationsModule,  
+        BrowserAnimationsModule,
+        FormsModule,
         ToastrModule.forRoot()  
     ],
     providers: [
