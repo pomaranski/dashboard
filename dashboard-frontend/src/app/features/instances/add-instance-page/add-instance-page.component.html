@@ -1,0 +1,229 @@
+<div class="d-flex align-items-center justify-content-center mt-5" data-automation="add-instance-page">
+    <div class="card bg-dark text-white shadow-lg w-50">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">Add instance</h4>
+            <hr class="text-white" />
+
+            <form [formGroup]="addInstanceForm" (ngSubmit)="onSubmit()">
+                <p class="text-danger" *ngIf="submitted && requestFailed">
+                    Provided wrong data
+                </p>
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <div class="input-group">
+                        <input
+                            class="form-control bg-dark text-white"
+                            placeholder="Name"
+                            type="text"
+                            formControlName="name"
+                            [ngClass]="{
+                                'is-invalid': submitted && form.name.errors
+                            }"
+                            data-automation="name-input"
+                        />
+                        <div
+                            *ngIf="submitted && form.name.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="form.name.errors.required">
+                                Name is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Http Uri</label>
+                    <div class="input-group">
+                        <input
+                            class="form-control bg-dark text-white"
+                            placeholder="Http Uri"
+                            type="text"
+                            formControlName="httpUri"
+                            [ngClass]="{
+                                'is-invalid': submitted && form.httpUri.errors
+                            }"
+                            data-automation="http-uri-input"
+                        />
+                        <div
+                            *ngIf="submitted && form.httpUri.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="form.httpUri.errors.required">
+                                Http Uri is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Instance Login</label>
+                            <div class="input-group">
+                                <input
+                                    class="form-control bg-dark text-white"
+                                    placeholder="Instance Login"
+                                    type="text"
+                                    formControlName="instanceLogin"
+                                    [ngClass]="{
+                                        'is-invalid':
+                                            submitted &&
+                                            form.instanceLogin.errors
+                                    }"
+                                    data-automation="instance-login-input"
+                                />
+                                <div
+                                    *ngIf="
+                                        submitted && form.instanceLogin.errors
+                                    "
+                                    class="invalid-feedback"
+                                >
+                                    <div
+                                        *ngIf="
+                                            form.instanceLogin.errors.required
+                                        "
+                                    >
+                                        Instance Login is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Instance Password</label>
+                            <div class="input-group">
+                                <input
+                                    class="form-control bg-dark text-white"
+                                    placeholder="Instance Password"
+                                    type="password"
+                                    formControlName="instancePassword"
+                                    [ngClass]="{
+                                        'is-invalid':
+                                            submitted &&
+                                            form.instancePassword.errors
+                                    }"
+                                    data-automation="instance-password-input"
+                                />
+                                <div
+                                    *ngIf="
+                                        submitted &&
+                                        form.instancePassword.errors
+                                    "
+                                    class="invalid-feedback"
+                                >
+                                    <div
+                                        *ngIf="
+                                            form.instancePassword.errors
+                                                .required
+                                        "
+                                    >
+                                        Instance Password is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Ssh Uri</label>
+                    <div class="input-group">
+                        <input
+                            class="form-control bg-dark text-white"
+                            placeholder="Ssh Uri"
+                            formControlName="sshUri"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && form.sshUri.errors
+                            }"
+                            data-automation="ssh-uri-input"
+                        />
+                        <div
+                            *ngIf="submitted && form.sshUri.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="form.sshUri.errors.required">
+                                Ssh Uri is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Host Login</label>
+                            <div class="input-group">
+                                <input
+                                    class="form-control bg-dark text-white"
+                                    placeholder="Host Login"
+                                    type="text"
+                                    formControlName="hostLogin"
+                                    [ngClass]="{
+                                        'is-invalid':
+                                            submitted && form.hostLogin.errors
+                                    }"
+                                    data-automation="host-login-input"
+                                />
+                                <div
+                                    *ngIf="submitted && form.hostLogin.errors"
+                                    class="invalid-feedback"
+                                >
+                                    <div *ngIf="form.hostLogin.errors.required">
+                                        Host Login is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Host Password</label>
+                            <div class="input-group">
+                                <input
+                                    class="form-control bg-dark text-white"
+                                    placeholder="Host Password"
+                                    type="password"
+                                    formControlName="hostPassword"
+                                    [ngClass]="{
+                                        'is-invalid':
+                                            submitted &&
+                                            form.hostPassword.errors
+                                    }"
+                                    data-automation="host-password-input"
+                                />
+                                <div
+                                    *ngIf="
+                                        submitted && form.hostPassword.errors
+                                    "
+                                    class="invalid-feedback"
+                                >
+                                    <div
+                                        *ngIf="
+                                            form.hostPassword.errors.required
+                                        "
+                                    >
+                                        Host Password is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-5">
+                    <button type="submit" class="btn btn-primary btn-block" data-automation="submit-instance-button">
+                        <span
+                            *ngIf="loading"
+                            class="spinner-border spinner-border-sm mr-1"
+                        ></span>
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
