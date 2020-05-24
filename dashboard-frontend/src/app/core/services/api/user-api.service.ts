@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-// import { map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { InstanceResponse } from '../../models/responses/instance-response';
 import { InstanceRequest } from '../../models/requests/instance-request';
-// import { LoginToInstanceResponse } from '../../models/responses/login-to-instance-response';
 import { ExecuteCommandRequest } from '../../models/requests/execute-command-request';
 import { CredentialsRequest } from '../../models/requests/credentials-request';
 import { CredentialsResponse } from '../../models/responses/credentials-response';
@@ -17,15 +15,6 @@ export class UserApiService {
     constructor(private http: HttpClient) { }
 
     private readonly baseUrl = environment.apiBase + '/user';
-
-    // public loginToInstance(instanceId: string): Observable<LoginToInstanceResponse> {
-    //     const url = `${this.baseUrl}/instance/${instanceId}/login`;
-    //     return this.http.post<LoginToInstanceResponse>(url, null).pipe(
-    //         map((response: LoginToInstanceResponse) => {
-    //             return response;
-    //         })
-    //     );
-    // }
 
     public getInstances(): Observable<InstanceResponse[]> {
         const url = `${this.baseUrl}/instance`;

@@ -43,7 +43,6 @@ export class AddInstancePageComponent implements OnInit {
                 instanceLogin: this.form.instanceLogin.value,
                 instancePassword: this.form.instancePassword.value,
                 sshUri: this.form.sshUri.value,
-                command: this.form.command.value,
                 hostLogin: this.form.hostLogin.value,
                 hostPassword: this.form.hostPassword.value,
             } as InstanceRequest)
@@ -66,7 +65,6 @@ export class AddInstancePageComponent implements OnInit {
             instanceLogin: ['', Validators.required],
             instancePassword: ['', Validators.required],
             sshUri: ['', Validators.required],
-            command: ['', Validators.required],
             hostLogin: ['', Validators.required],
             hostPassword: ['', Validators.required],
         });

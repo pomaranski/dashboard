@@ -4,7 +4,6 @@ export class InstanceRequest {
     instanceLogin: string;
     instancePassword: string;
     sshUri: string;
-    command: string;
     hostLogin: string;
     hostPassword: string;
 }

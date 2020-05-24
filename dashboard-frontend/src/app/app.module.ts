@@ -17,6 +17,7 @@ import { MainComponent } from './core/layouts/main/main.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { AddInstancePageComponent } from './features/instances/add-instance-page/add-instance-page.component';
 import { InstancePageComponent } from './features/instances/instance-page/instance-page.component';
+import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
 
 const LAYOUTS = [
     HeaderComponent,
@@ -31,6 +32,10 @@ const PAGES = [
     InstancePageComponent,
 ];
 
+const COMPONENTS = [
+    ConfirmModalComponent
+];
+
 const INTERCEPTORS = [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
@@ -41,6 +46,7 @@ const INTERCEPTORS = [
         AppComponent,
         ...LAYOUTS,
         ...PAGES,
+        ...COMPONENTS,
     ],
     imports: [
         BrowserModule,

@@ -6,6 +6,13 @@
 <div class="row">
   <div *ngFor="let instance of instances" class="col-md-6 col-lg-4 col-xl-3 text-light" [attr.data-automation]="instance.name">
       <h2>{{instance.name}}</h2>
-      <p><a target="_blank" (click)="loginToInstance(instance)" class="btn btn-success">Login</a></p>
+      <p>
+        <a target="_blank" (click)="loginToInstance(instance)" class="btn btn-success">Login</a>
+        <a target="_blank" (click)="openRemoveInstanceModal(instance)" data-toggle="modal" data-target="#confirmModal" class="btn btn-danger ml-2">Remove</a>
+      </p>
   </div>
 </div>
+
+<ngx-confirm-modal 
+  [title]="'Do you really want to delete instance?'" 
+  (onConfirm)="removeInstance()"></ngx-confirm-modal>
