@@ -1,14 +1,14 @@
 <div
     class="modal fade"
-    id="confirmModal"
+    id="executeCommandModal"
     tabindex="-1"
     role="dialog"
-    data-automation="confirm-modal"
+    data-automation="execute-command-modal"
 >
     <div class="modal-dialog" role="document">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">{{ title }}</h5>
+                <h5 class="modal-title" id="executeCommandModalLabel">Write command:</h5>
                 <button
                     type="button"
                     class="close text-white"
@@ -17,6 +17,9 @@
                 >
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+            <div class="modal-body">
+                <textarea class="w-100 bg-dark text-white" [(ngModel)]="command" rows="3"></textarea>
             </div>
             <div class="modal-footer">
                 <button
@@ -29,12 +32,12 @@
                 </button>
                 <button
                     type="button"
-                    (click)="confirm()"
+                    (click)="execute()"
                     class="btn btn-primary"
                     data-dismiss="modal"
-                    data-automation="confirm-button"
+                    data-automation="execute-command-button"
                 >
-                    Confirm
+                    Execute
                 </button>
             </div>
         </div>
