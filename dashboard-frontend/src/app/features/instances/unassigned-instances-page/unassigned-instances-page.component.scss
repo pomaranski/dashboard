@@ -1,0 +1,14 @@
+ul {
+    li {
+        border-radius: 0;
+        border-left: 7px solid #228d3a;
+
+        fa-icon {
+            transition: all 0.3s;
+            &:hover {
+                transform: scale(1.2);
+                cursor: pointer;
+            }
+        }
+    }
+}

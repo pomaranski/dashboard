@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { UserApiService } from './../../../core/services/api/user-api.service';
 import { InstanceRequest } from './../../../core/models/requests/instance-request';
@@ -22,6 +23,7 @@ export class AddInstancePageComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
+        private toastr: ToastrService,
         private userApiService: UserApiService
     ) {}
 
@@ -48,12 +50,26 @@ export class AddInstancePageComponent implements OnInit {
             } as InstanceRequest)
             .subscribe(
                 (_) => {
+                    this.toastr.success(
+                        'Instance added successfully!',
+                        'Success',
+                        {
+                            timeOut: 2000,
+                        }
+                    );
                     this.router.navigate(['home']);
                 },
-                (error) => {
+                (_) => {
                     this.loading = false;
                     this.requestFailed = true;
                     this.markAllControlsAsUntouched();
+                    this.toastr.error(
+                        'Something went wrong while adding instance!',
+                        'Error',
+                        {
+                            timeOut: 4000,
+                        }
+                    );
                 }
             );
     }
