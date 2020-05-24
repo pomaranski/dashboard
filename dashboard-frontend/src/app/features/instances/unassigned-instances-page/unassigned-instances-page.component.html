@@ -1,0 +1,11 @@
+<div data-automation="unassigned-instances-page">
+    <ul class="list-group w-100 mt-5">
+        <li
+            *ngFor="let uri of instanceUris"
+            class="list-group-item mb-2 bg-dark text-white shadow-sm d-flex justify-content-between"
+        >
+            <span>{{ uri }}</span>
+            <fa-icon (click)="copyToClipboard(uri)" icon="link"></fa-icon>
+        </li>
+    </ul>
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 import { AuthenticationService } from './../../core/services/api/authentication-api.service';
 import { LoginRequest } from 'src/app/core/models/requests/login-request';
@@ -27,6 +28,7 @@ export class LoginPageComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
+        private toastr: ToastrService,
         private authenticationService: AuthenticationService
     ) {}
 
@@ -50,13 +52,27 @@ export class LoginPageComponent implements OnInit {
             } as LoginRequest)
             .pipe(first())
             .subscribe(
-                (data) => {
+                (_) => {
+                    this.toastr.success(
+                        'Logged in successfully!',
+                        'Success',
+                        {
+                            timeOut: 2000,
+                        }
+                    );
                     this.router.navigate([this.returnUrl]);
                 },
-                (error) => {
+                (_) => {
                     this.loading = false;
                     this.loginFailed = true;
                     this.markAllControlsAsUntouched();
+                    this.toastr.error(
+                        'Something went wrong while logging!',
+                        'Error',
+                        {
+                            timeOut: 4000,
+                        }
+                    );
                 }
             );
     }
