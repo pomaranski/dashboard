@@ -24,14 +24,14 @@ export class HomePageComponent implements OnInit {
     }
 
     loginToInstance(instance: InstanceResponse): void {
-        this.userApiService.loginToInstance(instance.uuid).subscribe(
-            (data) => {
-                console.log(data);
-                this.router.navigate(['/instances']);
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
+        // this.userApiService.loginToInstance(instance.uuid).subscribe(
+        //     (data) => {
+        //         console.log(data);
+        //         this.router.navigate(['/instances']);
+        //     },
+        //     (error) => {
+        //         console.log(error);
+        //     }
+        // )
     }
 }

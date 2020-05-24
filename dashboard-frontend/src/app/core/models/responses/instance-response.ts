@@ -1,11 +1,8 @@
 export class InstanceResponse {
     uuid: string;
     name: string;
-    hostUri: string;
-    isHttps: boolean;
-    httpPort: number;
+    httpUri: string;
     instanceLogin: string;
-    sshPort: number;
-    command: string;
+    sshUri: string;
     hostLogin: string;
 }

@@ -3,7 +3,7 @@ export class InstanceRequest {
     httpUri: string;
     instanceLogin: string;
     instancePassword: string;
-    sshUri: number;
+    sshUri: string;
     command: string;
     hostLogin: string;
     hostPassword: string;

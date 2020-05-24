@@ -122,27 +122,26 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label>Ssh Uri</label>
-                        <div class="input-group">
-                            <input
-                                class="form-control bg-dark text-white"
-                                placeholder="Ssh Uri"
-                                type="number"
-                                formControlName="sshUri"
-                                [ngClass]="{
-                                    'is-invalid':
-                                        submitted && form.sshUri.errors
-                                }"
-                            />
-                            <div
-                                *ngIf="submitted && form.sshUri.errors"
-                                class="invalid-feedback"
-                            >
-                                <div *ngIf="form.sshUri.errors.required">
-                                    Ssh Uri is required
-                                </div>
+                <div class="form-group">
+                    <label>Ssh Uri</label>
+                    <div class="input-group">
+                        <input
+                            class="form-control bg-dark text-white"
+                            placeholder="Ssh Uri"
+                            formControlName="sshUri"
+                            [ngClass]="{
+                                'is-invalid':
+                                    submitted && form.sshUri.errors
+                            }"
+                        />
+                        <div
+                            *ngIf="submitted && form.sshUri.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="form.sshUri.errors.required">
+                                Ssh Uri is required
                             </div>
                         </div>
                     </div>
