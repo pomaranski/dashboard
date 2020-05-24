@@ -3,13 +3,19 @@ import { Router } from '@angular/router';
 
 import { UserApiService } from './../../core/services/api/user-api.service';
 import { InstanceResponse } from './../../core/models/responses/instance-response';
+import { InstanceService } from 'src/app/core/services/instance.service';
+import { Credentials } from 'src/app/core/models/credentials';
 
 @Component({
     selector: 'ngx-home-page',
     templateUrl: './home-page.component.html',
 })
 export class HomePageComponent implements OnInit {
-    constructor(private router: Router, private userApiService: UserApiService) {}
+    constructor(
+        private router: Router,
+        private userApiService: UserApiService,
+        private instanceService: InstanceService
+    ) {}
 
     instances: InstanceResponse[] = [];
     selectedInstance: InstanceResponse;
@@ -26,16 +32,10 @@ export class HomePageComponent implements OnInit {
     }
 
     loginToInstance(instance: InstanceResponse): void {
-        this.router.navigate(['/instances']);
-        // this.userApiService.loginToInstance(instance.uuid).subscribe(
-        //     (data) => {
-        //         console.log(data);
-        //         this.router.navigate(['/instances']);
-        //     },
-        //     (error) => {
-        //         console.log(error);
-        //     }
-        // )
+        this.instanceService.loginToInstance(instance.uuid).subscribe((credentials: Credentials) => {
+            console.log(credentials);
+            this.router.navigate(['/instances'])
+        });
     }
 
     openRemoveInstanceModal(instance: InstanceResponse): void {
