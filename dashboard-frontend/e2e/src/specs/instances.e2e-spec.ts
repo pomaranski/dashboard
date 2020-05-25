@@ -11,7 +11,7 @@ describe('Instances CRUD operations: ', () => {
     instancesPO = new InstancesPage();
     
     instancesPO.navigateTo("home");
-    loginPO.login();
+    loginPO.logIn();
   });
 
   it('should add instance', () => {        
@@ -31,14 +31,20 @@ describe('Instances CRUD operations: ', () => {
     expect(browser.getCurrentUrl()).toEqual("http://localhost:4200/home");
   });
 
-  it('should delete instance', () => {
+  it('should delete instance', () => {    
     instancesPO.navigateTo("home");
-    browser.wait(ExpectedConditions.elementToBeClickable(instancesPO.getRemoveInstanceButton("TestInstance")));
 
+    browser.wait(ExpectedConditions.elementToBeClickable(instancesPO.getRemoveInstanceButton("TestInstance")));
     instancesPO.getRemoveInstanceButton("TestInstance").click();
+
     browser.wait(ExpectedConditions.elementToBeClickable(instancesPO.getConfirmRemovalButton()));
+    browser.sleep(500);
     instancesPO.getConfirmRemovalButton().click();
 
     expect(instancesPO.getByDataAutomation("TestInstance").isPresent()).toBeFalsy();
+  });
+
+  afterAll(() => {
+    loginPO.logOut();
   });
 });

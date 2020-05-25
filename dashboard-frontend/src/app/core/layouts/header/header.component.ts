@@ -22,6 +22,10 @@ export class HeaderComponent {
         return false;
     }
 
+    get isAdmin(): boolean {
+        return this.authenticationService.isAdmin;
+    }
+
     logout(): void {
         this.authenticationService.logout();
         this.router.navigate(['/login']);

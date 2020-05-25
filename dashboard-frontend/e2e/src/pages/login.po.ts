@@ -1,36 +1,41 @@
 import { BasePage } from "./base.po";
-import { by, element, ElementFinder, browser } from 'protractor';
+import { by, element, ElementFinder, browser, ExpectedConditions } from 'protractor';
 
-export class LoginPage extends BasePage {    
+export class LoginPage extends BasePage {
 
-  getLoginInput(): ElementFinder {
-      return this.getByDataAutomation("login-input");
-  }
+    getLoginInput(): ElementFinder {
+        return this.getByDataAutomation("login-input");
+    }
 
-  getPasswordInput(): ElementFinder {
-      return this.getByDataAutomation("password-input");
-  }
+    getPasswordInput(): ElementFinder {
+        return this.getByDataAutomation("password-input");
+    }
 
-  getKeyInput(): ElementFinder {
-      return this.getByDataAutomation("key-input");
-  }
+    getKeyInput(): ElementFinder {
+        return this.getByDataAutomation("key-input");
+    }
 
-  getWrongCredentialsText(): ElementFinder {
-      return this.getByDataAutomation("wrong-logincredentials-text");
-  }
+    getWrongCredentialsText(): ElementFinder {
+        return this.getByDataAutomation("wrong-logincredentials-text");
+    }
 
-  getLogoutButton(): ElementFinder {
-      return this.getByDataAutomation("logout-button");
-  }
+    getLogoutButton(): ElementFinder {
+        return this.getByDataAutomation("logout-button");
+    }
 
-  getLoginConfirmButton(): ElementFinder {
-      return this.getByDataAutomation("submit-login-button");
-  }
+    getLoginConfirmButton(): ElementFinder {
+        return this.getByDataAutomation("submit-login-button");
+    }
 
-  login(): void {
-    this.getLoginInput().sendKeys('login');
-    this.getPasswordInput().sendKeys('password');
-    this.getKeyInput().sendKeys('395a4f34a0fec5df4b644cc480c8d861');
-    this.getLoginConfirmButton().click();
-  }
+    logIn(login: string = "login"): void {
+        this.getLoginInput().sendKeys(login);
+        this.getPasswordInput().sendKeys('password');
+        this.getKeyInput().sendKeys('395a4f34a0fec5df4b644cc480c8d861');
+        this.getLoginConfirmButton().click();
+    }
+
+    logOut(): void {
+        this.waitToastDisappear();
+        this.getLogoutButton().click();
+    }
 }

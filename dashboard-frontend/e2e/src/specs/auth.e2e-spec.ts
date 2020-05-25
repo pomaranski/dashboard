@@ -1,14 +1,14 @@
 import { LoginPage } from "../pages/login.po";
-import { browser } from 'protractor';
+import { browser, ExpectedConditions } from 'protractor';
 
 describe('Login component: ', () => {  
   let loginPO: LoginPage;
 
-  beforeEach(() => {
+  beforeAll(() => {
     loginPO = new LoginPage();
   });
 
-  it('invalid login', () => {
+  it('invalid login', () => {    
     loginPO.navigateTo("home");
     expect(browser.getCurrentUrl()).toEqual("http://localhost:4200/login?returnUrl=%2Fhome");
     loginPO.getLoginInput().sendKeys('wronglogin');
@@ -18,7 +18,7 @@ describe('Login component: ', () => {
     
     expect(browser.getCurrentUrl()).not.toEqual("http://localhost:4200/home");
     expect(loginPO.getLogoutButton().isPresent()).toBeFalsy();
-    expect(loginPO.getWrongCredentialsText().isPresent()).toBeTruthy();
+    expect(loginPO.getWrongCredentialsText().isPresent()).toBeTruthy();    
   });
 
   it('invalid password', () => {
@@ -64,11 +64,12 @@ describe('Login component: ', () => {
 
   it('logout', async () => {
     loginPO.navigateTo("home");
+    browser.wait(ExpectedConditions.elementToBeClickable(loginPO.getLogoutButton()));
     loginPO.getLogoutButton().click();
     expect(loginPO.getLogoutButton().isPresent()).toBeFalsy();
     
     let token = await browser.executeScript("return window.localStorage.getItem(\"token\");");
     expect(token).toBeNull();
     expect(browser.getCurrentUrl()).toEqual("http://localhost:4200/login");
-  })  
+  });
 });
