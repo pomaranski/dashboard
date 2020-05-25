@@ -1,8 +1,21 @@
-<div data-automation="instance-page"></div>
-
-<iframe
-    #instanceView
-    width="700"
-    height="700"
-    [src]="instanceUrl | safe">
-</iframe>
+<div
+    data-automation="instance-page"
+    class="d-flex justify-content-center align-center"
+>
+    <div>
+        <div
+            *ngIf="isLoading"
+            class="spinner-border position-absolute"
+            role="status"
+        >
+            <span class="sr-only">Loading...</span>
+        </div>
+        <iframe
+            id="instance-view"
+            [width]="width"
+            [height]="height"
+            [src]="instanceUrl | safe"
+        >
+        </iframe>
+    </div>
+</div>
