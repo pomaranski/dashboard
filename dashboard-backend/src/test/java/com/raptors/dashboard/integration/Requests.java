@@ -5,6 +5,7 @@ import com.raptors.dashboard.model.CredentialsRequest;
 import com.raptors.dashboard.model.ExecuteCommandRequest;
 import com.raptors.dashboard.model.InstanceRequest;
 import com.raptors.dashboard.model.InstanceResponse;
+import com.raptors.dashboard.model.RegisterRequest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.SneakyThrows;
@@ -143,6 +144,15 @@ public class Requests {
                 .contentType(ContentType.JSON)
                 .body(new ExecuteCommandRequest(command))
                 .post("/user/instance/{instanceId}/execute", instanceRequest.getUuid());
+    }
+
+    public static Response whenRegisterOwner(String token, RegisterRequest registerRequest) {
+        return given()
+                .port(port)
+                .auth().oauth2(token)
+                .contentType(ContentType.JSON)
+                .body(registerRequest)
+                .post("/admin/register");
     }
 
     private static String randomString() {
