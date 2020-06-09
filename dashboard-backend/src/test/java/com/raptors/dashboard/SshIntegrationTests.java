@@ -55,7 +55,7 @@ public class SshIntegrationTests {
     private SshService sshService;
 
     @Mock
-    InstanceSshConnector instanceSshConnector;
+    private InstanceSshConnector instanceSshConnector;
 
     @Before
     public void setup() {
@@ -163,7 +163,7 @@ public class SshIntegrationTests {
 
         InstanceResponse instance = testOwner.addInstance();
 
-        whenExecuteCommand(testOwner.getToken(), instance, "")
+        whenExecuteCommand(testOwner.getToken(), instance, EMPTY)
                 .then()
                 .statusCode(HTTP_BAD_REQUEST);
     }

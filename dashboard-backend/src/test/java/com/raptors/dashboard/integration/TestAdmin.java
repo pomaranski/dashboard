@@ -1,9 +1,12 @@
 package com.raptors.dashboard.integration;
 
+import com.raptors.dashboard.model.RegisterRequest;
+
 import java.util.List;
 
 import static com.raptors.dashboard.integration.Requests.whenGetUnassignedInstances;
 import static com.raptors.dashboard.integration.Requests.whenRegisterAdmin;
+import static com.raptors.dashboard.integration.Requests.whenRegisterOwner;
 
 public class TestAdmin extends TestOwner {
 
@@ -34,5 +37,11 @@ public class TestAdmin extends TestOwner {
                 .statusCode(200)
                 .extract()
                 .as(List.class);
+    }
+
+    public void registerOwner(RegisterRequest registerRequest) {
+        whenRegisterOwner(token, registerRequest)
+                .then()
+                .statusCode(200);
     }
 }
