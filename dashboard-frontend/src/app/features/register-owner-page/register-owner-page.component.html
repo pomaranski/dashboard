@@ -1,0 +1,112 @@
+<div class="d-flex align-items-center justify-content-center mt-5" data-automation="login-page">
+    <div class="card bg-dark text-white shadow-lg">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">Register new owner</h4>
+            <hr class="text-white" />
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <p class="text-danger" data-automation="wrong-logincredentials-text" *ngIf="
+                        submitted &&
+                        registerFailed &&
+                        (
+                            form.login.touched ||
+                            form.password.touched ||
+                            form.key.touched
+                        ) == false
+                    "
+                >
+                    Provided wrong login or password or key
+                </p>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon icon="user"></fa-icon>
+                            </span>
+                        </div>
+                        <input
+                            class="form-control bg-dark text-white"
+                            placeholder="Email or login"
+                            type="email"
+                            formControlName="login"
+                            [ngClass]="{
+                                'is-invalid': submitted && form.login.errors
+                            }"
+                            data-automation="login-input"
+                        />
+                        <div
+                            *ngIf="submitted && form.login.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="form.login.errors.required">
+                                Email is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon icon="lock"></fa-icon>
+                            </span>
+                        </div>
+                        <input
+                            class="form-control bg-dark text-white"
+                            placeholder="******"
+                            type="password"
+                            formControlName="password"
+                            [ngClass]="{
+                                'is-invalid': submitted && form.password.errors
+                            }"
+                            data-automation="password-input"
+                        />
+                        <div
+                            *ngIf="submitted && form.password.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="form.password.errors.required">
+                                Password is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon icon="key"></fa-icon>
+                            </span>
+                        </div>
+                        <input
+                            class="form-control bg-dark text-white"
+                            placeholder="hashed key"
+                            type="text"
+                            formControlName="key"
+                            [ngClass]="{
+                                'is-invalid': submitted && form.key.errors
+                            }"
+                            data-automation="key-input"
+                        />
+                        <div
+                            *ngIf="submitted && form.key.errors"
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="form.key.errors.required">
+                                Key is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-5">
+                    <button type="submit" class="btn btn-primary btn-block" data-automation="submit-login-button">
+                        <span
+                            *ngIf="loading"
+                            class="spinner-border spinner-border-sm mr-1"
+                        ></span>
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

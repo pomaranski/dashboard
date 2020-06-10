@@ -23,6 +23,7 @@ import { InstancePageComponent } from './features/instances/instance-page/instan
 import { UnassignedInstancesComponent } from './features/instances/unassigned-instances-page/unassigned-instances-page.component';
 import { ConfirmModalComponent } from './shared/components/confirm-modal/confirm-modal.component';
 import { ExecuteCommandModalComponent } from './features/instances/execute-command-modal/execute-command-modal.component';
+import { RegisterOwnerPageComponent } from './features/register-owner-page/register-owner-page.component';
 import { SafePipe } from './core/pipes/safe.pipe';
 
 const LAYOUTS = [
@@ -37,6 +38,7 @@ const PAGES = [
     AddInstancePageComponent,
     InstancePageComponent,
     UnassignedInstancesComponent,
+    RegisterOwnerPageComponent,
 ];
 
 const COMPONENTS = [

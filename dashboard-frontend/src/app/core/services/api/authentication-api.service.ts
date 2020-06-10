@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { LoginRequest } from './../../models/requests/login-request';
 import { LoginResponse } from '../../models/responses/login-response';
+import { RegisterRequest } from '../../models/requests/RegisterRequest';
 import { environment } from 'src/environments/environment';
 import { Role } from '../../constants/roles';
 
@@ -53,6 +54,11 @@ export class AuthenticationService {
                 return loginResponse.token;
             })
         );
+    }
+
+    public register(registerRequest: RegisterRequest): Observable<void> {
+        const url = `${this.baseUrl}/admin/register`;
+        return this.http.post<any>(url, registerRequest);
     }
 
     public logout(): void {

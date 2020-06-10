@@ -8,6 +8,7 @@ import { HomePageComponent } from './features/home-page/home-page.component';
 import { AddInstancePageComponent } from './features/instances/add-instance-page/add-instance-page.component';
 import { InstancePageComponent } from './features/instances/instance-page/instance-page.component';
 import { UnassignedInstancesComponent } from './features/instances/unassigned-instances-page/unassigned-instances-page.component';
+import { RegisterOwnerPageComponent } from './features/register-owner-page/register-owner-page.component';
 import { Role } from './core/constants/roles';
 
 const routes: Routes = [
@@ -39,6 +40,12 @@ const routes: Routes = [
                 canActivate: [AuthGuard],
                 data: { roles: [Role.ROLE_ADMIN] },
                 component: UnassignedInstancesComponent,
+            },            
+            {
+                path: 'owner/register',
+                canActivate: [AuthGuard],
+                data: { roles: [Role.ROLE_ADMIN] },
+                component: RegisterOwnerPageComponent,
             },
             {
                 path: '**',
