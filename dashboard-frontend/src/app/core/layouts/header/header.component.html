@@ -14,6 +14,7 @@
             <div class="navbar-nav">
                 <a [routerLinkActive]="['active']" routerLink="/home" *ngIf="isLoggedIn" class="nav-item nav-link" data-automation="home-navigation-link">Home</a>
                 <a [routerLinkActive]="['active']" routerLink="/instances/unassigned" *ngIf="isAdmin" class="nav-item nav-link" data-automation="unassigned-instances-navigation-link">Unassigned</a>
+                <a [routerLinkActive]="['active']" routerLink="/owner/register" *ngIf="isAdmin" class="nav-item nav-link" data-automation="unassigned-instances-navigation-link">Register owner</a>
             </div>
             <div class="navbar-nav ml-auto">
                 <a *ngIf="isLoggedIn" (click)="logout()" class="nav-item nav-link btn" data-automation="logout-button">Logout</a>
