@@ -15,7 +15,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<java.jwt.version>3.4.0</java.jwt.version>
-		<bouncycastle.version>1.58</bouncycastle.version>
+		<bouncycastle.version>1.67</bouncycastle.version>
 	</properties>
 
 	<dependencies>
